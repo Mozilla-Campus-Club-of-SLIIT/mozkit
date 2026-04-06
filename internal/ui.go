@@ -1,8 +1,15 @@
 package internal
 
-import tea "charm.land/bubbletea/v2"
+import (
+	"fmt"
+
+	tea "charm.land/bubbletea/v2"
+	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/components"
+	"github.com/charmbracelet/lipgloss"
+)
 
 type Model struct {
+	width int
 }
 
 func NewModel() *Model {
@@ -15,6 +22,9 @@ func (m *Model) Init() tea.Cmd {
 
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+
 	case tea.KeyPressMsg:
 		switch msg.String() {
 		case "ctrl+c", "q":
@@ -25,7 +35,15 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *Model) View() tea.View {
-	view := tea.NewView("Hi!")
+	header := components.Header()
+	tmp := fmt.Sprintf("Termianl Width is %d", m.width)
+	view := tea.NewView(
+		lipgloss.JoinVertical(
+			lipgloss.Top,
+			header,
+			tmp,
+		),
+	)
 	view.AltScreen = true
 	return view
 }
