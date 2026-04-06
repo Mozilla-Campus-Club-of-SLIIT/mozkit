@@ -35,15 +35,16 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *Model) View() tea.View {
-	header := components.Header()
+	header := components.Header(m.width)
 	tmp := fmt.Sprintf("Termianl Width is %d", m.width)
-	view := tea.NewView(
-		lipgloss.JoinVertical(
-			lipgloss.Top,
-			header,
-			tmp,
-		),
+
+	content := lipgloss.JoinVertical(
+		lipgloss.Top,
+		header,
+		tmp,
 	)
+
+	view := tea.NewView(lipgloss.NewStyle().Padding(1).Render(content))
 	view.AltScreen = true
 	return view
 }
