@@ -33,16 +33,31 @@ func rightDecorate(leftDecoration, logo string, width int) string {
 	return lipgloss.NewStyle().Foreground(assets.ColorGray).Bold(true).Render(strings.Join(lines, "\n"))
 }
 
-func Header(width int) string {
+func breadcrumbs(location ...string) string {
+	content := "mozkit://"
+	if location != nil {
+		content += strings.Join(location, "/")
+	}
+	return lipgloss.NewStyle().Padding(0, 2).Background(assets.ColorOrange).Foreground(assets.ColorWhite).Bold(true).Render(content)
+}
+
+func Header(width int, location ...string) string {
 	const margin = 2
 	logo := assets.RenderLogo()
 	leftDecoration := lipgloss.NewStyle().MarginRight(margin).Render(
 		leftDecorate(logo))
 	rightDecoration := lipgloss.NewStyle().MarginLeft(margin).Render(rightDecorate(leftDecoration, logo, width))
-	return lipgloss.JoinHorizontal(
-		lipgloss.Left,
-		leftDecoration,
-		logo,
-		rightDecoration,
+	breadcrumbs := lipgloss.NewStyle().MarginTop(1).Render(breadcrumbs(location...))
+
+	return lipgloss.JoinVertical(
+		lipgloss.Top,
+		lipgloss.JoinHorizontal(
+			lipgloss.Left,
+			leftDecoration,
+			logo,
+			rightDecoration,
+		),
+		breadcrumbs,
 	)
+
 }

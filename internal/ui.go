@@ -41,6 +41,7 @@ func (m *Model) View() tea.View {
 	content := lipgloss.JoinVertical(
 		lipgloss.Top,
 		header,
+		"",
 		tmp,
 	)
 
