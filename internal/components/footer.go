@@ -3,14 +3,15 @@ package components
 import (
 	"strings"
 
+	"charm.land/lipgloss/v2"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/assets"
-	"github.com/charmbracelet/lipgloss"
 )
 
 var KeyBindings = [][2]string{
 	{"↑/k", "up"},
 	{"↓/j", "down"},
 	{"enter", "select"},
+	{"/", "search"},
 	{"esc", "back"},
 	{"q", "quit"},
 }

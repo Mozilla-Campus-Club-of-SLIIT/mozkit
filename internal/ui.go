@@ -3,19 +3,30 @@ package internal
 import (
 	"fmt"
 
+	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/assets"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/components"
-	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {
 	width  int
 	height int
+	menu   list.Model
 }
 
 func NewModel() *Model {
-	return &Model{}
+	items := []components.Item{
+		{TitleStr: "Events", DescStr: "See upcoming Mozilla Campus Club events"},
+		{TitleStr: "Members", DescStr: "View the active member directory"},
+		{TitleStr: "About", DescStr: "Learn more about Mozkit"},
+	}
+	myList := components.NewList(items, 0, 0)
+
+	return &Model{
+		menu: myList,
+	}
 }
 
 func (m *Model) Init() tea.Cmd {
@@ -34,32 +45,33 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		}
 	}
-	return m, nil
+	var cmd tea.Cmd
+	m.menu, cmd = m.menu.Update(msg)
+	return m, cmd
 }
 
 func (m *Model) View() tea.View {
 	content := sizeCheck(m.width, m.height, func() string {
 
-		topSection := lipgloss.JoinVertical(
-			lipgloss.Left,
-			components.Header(m.width),
-			"",
-			fmt.Sprintf("Terminal Width is %d, Height is %d", m.width, m.height),
-		)
-
+		header := components.Header(m.width)
 		footer := components.Footer()
 
-		//? Subtract 2 from height to account for Padding(1) on top and bottom
-		spaceBetweenUs := m.height - 2 - lipgloss.Height(topSection) - lipgloss.Height(footer)
+		//? -2 from height to account for Padding(1) on top and bottom
+		//? -1 for the gap we add between header and menu
+		spaceBetweenUs := m.height - 3 - lipgloss.Height(header) - lipgloss.Height(footer)
 
-		normalContent := lipgloss.JoinVertical(
-			lipgloss.Top,
-			topSection,
-			lipgloss.NewStyle().Height(spaceBetweenUs).Render(""),
+		m.menu.SetSize(m.width, spaceBetweenUs)
+
+		content := lipgloss.JoinVertical(
+			lipgloss.Left,
+			header,
+			"",
+			m.menu.View(),
+			"",
 			footer,
 		)
 
-		return lipgloss.NewStyle().Padding(1).Render(normalContent)
+		return lipgloss.NewStyle().Padding(1).Render(content)
 	})
 
 	view := tea.NewView(content)

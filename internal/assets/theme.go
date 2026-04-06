@@ -1,6 +1,6 @@
 package assets
 
-import "github.com/charmbracelet/lipgloss"
+import "charm.land/lipgloss/v2"
 
 var (
 	// Colors

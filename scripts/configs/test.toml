@@ -7,6 +7,6 @@ tool = "echo"
 arguments = ["Arch BTW"]
 
 [[action]]
-description = "Say Arch Linux is the best distro ever"
-tool = "echo"
-arguments = ["Arch Linux is the best distro ever"]
+description = "What is the best linux distro ever released?"
+tool = "ask"
+arguments = ["var=best_distro"]

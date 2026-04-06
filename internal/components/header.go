@@ -3,8 +3,8 @@ package components
 import (
 	"strings"
 
+	"charm.land/lipgloss/v2"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/assets"
-	"github.com/charmbracelet/lipgloss"
 )
 
 const decorator = "/"
@@ -38,7 +38,7 @@ func breadcrumbs(location ...string) string {
 	if location != nil {
 		content += strings.Join(location, "/")
 	}
-	return lipgloss.NewStyle().Padding(0, 2).Background(assets.ColorOrange).Foreground(assets.ColorWhite).Bold(true).Render(content)
+	return lipgloss.NewStyle().Padding(0, 1).Background(assets.ColorOrange).Foreground(assets.ColorWhite).Bold(true).Render(content)
 }
 
 func Header(width int, location ...string) string {
