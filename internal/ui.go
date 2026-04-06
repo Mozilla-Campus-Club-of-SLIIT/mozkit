@@ -73,13 +73,13 @@ func sizeCheck(width, height int, content func() string) string {
 
 	if width <= minWidth-1 || height <= minHeight-1 {
 
-		title := lipgloss.NewStyle().Foreground(assets.ColorWhite).Bold(true).Render("Mozkit needs a little more room to run!")
+		title := lipgloss.NewStyle().Foreground(assets.ColorWhite).Bold(true).Render("I needs a little more room to stretch my legs!")
 
 		stats := lipgloss.NewStyle().Foreground(assets.ColorGray).Align(lipgloss.Center).Render(
-			fmt.Sprintf("Current size: %dx%d\nRequired size(at least): %dx%d", width, height, minWidth, minHeight),
+			fmt.Sprintf("What you gave me: %dx%d\nWhat I need(at least): %dx%d", width, height, minWidth, minHeight),
 		)
 
-		instruction := lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true).Render("Please resize your terminal or decrease your font size.")
+		instruction := lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true).Render("Could you please resize your terminal or decrease your font size?")
 
 		contentBox := lipgloss.JoinVertical(
 			lipgloss.Center,
