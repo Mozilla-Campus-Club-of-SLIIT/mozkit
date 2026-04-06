@@ -36,7 +36,7 @@ func RenderLogo() string {
 	logo := logo()
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
-		lipgloss.NewStyle().Foreground(ColorOrange).Render("sliitmozilla.org"),
+		lipgloss.NewStyle().Foreground(ColorOrange).Bold(true).Render("sliitmozilla.org"),
 		logo,
 	)
 }
