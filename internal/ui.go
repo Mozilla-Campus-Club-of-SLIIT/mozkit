@@ -30,7 +30,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyPressMsg:
 		switch msg.String() {
-		case "ctrl+c", "q":
+		case "q":
 			return m, tea.Quit
 		}
 	}
@@ -40,14 +40,23 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m *Model) View() tea.View {
 	content := sizeCheck(m.width, m.height, func() string {
 
-		header := components.Header(m.width)
-		tmp := fmt.Sprintf("Terminal Width is %d, Height is %d", m.width, m.height)
+		topSection := lipgloss.JoinVertical(
+			lipgloss.Left,
+			components.Header(m.width),
+			"",
+			fmt.Sprintf("Terminal Width is %d, Height is %d", m.width, m.height),
+		)
+
+		footer := components.Footer()
+
+		//? Subtract 2 from height to account for Padding(1) on top and bottom
+		spaceBetweenUs := m.height - 2 - lipgloss.Height(topSection) - lipgloss.Height(footer)
 
 		normalContent := lipgloss.JoinVertical(
 			lipgloss.Top,
-			header,
-			"",
-			tmp,
+			topSection,
+			lipgloss.NewStyle().Height(spaceBetweenUs).Render(""),
+			footer,
 		)
 
 		return lipgloss.NewStyle().Padding(1).Render(normalContent)
