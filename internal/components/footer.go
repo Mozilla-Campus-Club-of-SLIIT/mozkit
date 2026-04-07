@@ -13,7 +13,7 @@ var KeyBindings = [][2]string{
 	{"enter", "select"},
 	{"/", "search"},
 	{"esc", "back"},
-	{"q", "quit"},
+	{"ctrl+c", "quit"},
 }
 
 func Footer() string {

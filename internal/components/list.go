@@ -6,7 +6,9 @@ import (
 )
 
 type Item struct {
-	TitleStr, DescStr string
+	TitleStr string `toml:"title"`
+	DescStr  string `toml:"description"`
+	Target   string `toml:"target"`
 }
 
 func (i Item) Title() string       { return i.TitleStr }
@@ -43,7 +45,9 @@ func NewList(items []Item, width, height int) list.Model {
 	l.SetShowTitle(false)
 	l.SetShowStatusBar(false)
 	l.SetShowHelp(false)
-	l.SetFilteringEnabled(false)
+	l.KeyMap.Quit.Unbind()
+	l.KeyMap.ForceQuit.Unbind()
+	// l.SetFilteringEnabled(false)
 
 	return l
 }

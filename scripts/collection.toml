@@ -1,14 +1,14 @@
 [[collection]]
-name = "Select and apply preset"
+title = "Select and apply preset"
 description = "Choose from pre-defined system configurations"
-directory = "presets"
+target = "presets"
 
 [[collection]]
-name = "Select and apply configs"
+title = "Select and apply configs"
 description = "Configure specific tools and settings"
-directory = "configs"
+target = "configs"
 
 [[collection]]
-name = "Select and install packs"
+title = "Select and install packs"
 description = "Browse and install software packages"
-directory = "packs"
+target = "packs"

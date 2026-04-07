@@ -15,10 +15,11 @@ type Model struct {
 	width  int
 	height int
 	menu   list.Model
+	stack  []string
 }
 
 func NewModel() *Model {
-	menu := components.NewList(engine.ScriptList(), 0, 0)
+	menu := components.NewList(engine.CollectionList(), 0, 0)
 
 	return &Model{
 		menu: menu,
@@ -37,8 +38,43 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyPressMsg:
 		switch msg.String() {
-		case "q":
+		case "ctrl+c":
 			return m, tea.Quit
+		case "enter":
+			if item, ok := m.menu.SelectedItem().(components.Item); ok {
+				if len(m.stack) == 0 {
+					m.stack = append(m.stack, item.TitleStr)
+
+					newItems := engine.ScriptList(item.Target)
+					listItems := make([]list.Item, len(newItems))
+					for i, it := range newItems {
+						listItems[i] = it
+					}
+
+					cmd := m.menu.SetItems(listItems)
+					m.menu.ResetSelected()
+					return m, cmd
+				} else {
+					// User pressed enter on an actual script!
+				}
+			}
+
+		case "esc":
+			if len(m.stack) > 0 {
+				m.stack = m.stack[:len(m.stack)-1]
+
+				rootItems := engine.CollectionList()
+				listItems := make([]list.Item, len(rootItems))
+				for i, it := range rootItems {
+					listItems[i] = it
+				}
+
+				cmd := m.menu.SetItems(listItems)
+				m.menu.ResetSelected()
+				return m, cmd
+			} else if len(m.stack) == 0 {
+				return m, nil
+			}
 		}
 	}
 	var cmd tea.Cmd
@@ -49,7 +85,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m *Model) View() tea.View {
 	content := sizeCheck(m.width, m.height, func() string {
 
-		header := components.Header(m.width)
+		header := components.Header(m.width, m.stack...)
 		footer := components.Footer()
 
 		// m.height (total)
