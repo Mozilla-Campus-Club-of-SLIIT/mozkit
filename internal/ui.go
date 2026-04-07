@@ -12,17 +12,17 @@ import (
 )
 
 type Model struct {
-	width  int
-	height int
-	menu   list.Model
-	stack  []string
+	width   int
+	height  int
+	content list.Model
+	stack   []string
 }
 
 func NewModel() *Model {
 	menu := components.NewList(engine.CollectionList(), 0, 0)
 
 	return &Model{
-		menu: menu,
+		content: menu,
 	}
 }
 
@@ -41,7 +41,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			return m, tea.Quit
 		case "enter":
-			if item, ok := m.menu.SelectedItem().(components.Item); ok {
+			if item, ok := m.content.SelectedItem().(components.Item); ok {
 				if len(m.stack) == 0 {
 					m.stack = append(m.stack, item.TitleStr)
 
@@ -51,8 +51,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 						listItems[i] = it
 					}
 
-					cmd := m.menu.SetItems(listItems)
-					m.menu.ResetSelected()
+					cmd := m.content.SetItems(listItems)
+					m.content.ResetSelected()
 					return m, cmd
 				} else {
 					// User pressed enter on an actual script!
@@ -60,7 +60,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 		case "esc":
-			if m.menu.FilterState() == list.Filtering {
+			if m.content.FilterState() == list.Filtering {
 				break
 			}
 
@@ -73,8 +73,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					listItems[i] = it
 				}
 
-				cmd := m.menu.SetItems(listItems)
-				m.menu.ResetSelected()
+				cmd := m.content.SetItems(listItems)
+				m.content.ResetSelected()
 				return m, cmd
 			} else if len(m.stack) == 0 {
 				return m, nil
@@ -82,7 +82,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 	var cmd tea.Cmd
-	m.menu, cmd = m.menu.Update(msg)
+	m.content, cmd = m.content.Update(msg)
 	return m, cmd
 }
 
@@ -99,13 +99,13 @@ func (m *Model) View() tea.View {
 		// - 2 for the two "" strings we are adding to the layout!
 		spaceBetweenUs := m.height - 4 - lipgloss.Height(header) - lipgloss.Height(footer)
 
-		m.menu.SetSize(m.width, spaceBetweenUs)
+		m.content.SetSize(m.width, spaceBetweenUs)
 
 		content := lipgloss.JoinVertical(
 			lipgloss.Left,
 			header,
 			"",
-			m.menu.View(),
+			m.content.View(),
 			"",
 			footer,
 		)
