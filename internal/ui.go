@@ -56,9 +56,12 @@ func (m *Model) View() tea.View {
 		header := components.Header(m.width)
 		footer := components.Footer()
 
-		//? -2 from height to account for Padding(1) on top and bottom
-		//? -1 for the gap we add between header and menu
-		spaceBetweenUs := m.height - 3 - lipgloss.Height(header) - lipgloss.Height(footer)
+		// m.height (total)
+		// - 2 for the outer Padding(1) on top and bottom
+		// - Height of Header
+		// - Height of Footer
+		// - 2 for the two "" strings we are adding to the layout!
+		spaceBetweenUs := m.height - 4 - lipgloss.Height(header) - lipgloss.Height(footer)
 
 		m.menu.SetSize(m.width, spaceBetweenUs)
 
