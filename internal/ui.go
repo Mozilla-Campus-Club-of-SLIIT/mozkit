@@ -60,6 +60,10 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 		case "esc":
+			if m.menu.FilterState() == list.Filtering {
+				break
+			}
+
 			if len(m.stack) > 0 {
 				m.stack = m.stack[:len(m.stack)-1]
 
