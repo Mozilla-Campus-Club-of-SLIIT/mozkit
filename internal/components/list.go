@@ -2,8 +2,28 @@ package components
 
 import (
 	"charm.land/bubbles/v2/list"
+	tea "charm.land/bubbletea/v2"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/assets"
 )
+
+type ListPage struct {
+	Model list.Model
+}
+
+func (p ListPage) SetSize(width, height int) Page {
+	p.Model.SetSize(width, height)
+	return p
+}
+
+func (p ListPage) Update(msg tea.Msg) (Page, tea.Cmd) {
+	var cmd tea.Cmd
+	p.Model, cmd = p.Model.Update(msg)
+	return p, cmd
+}
+
+func (p ListPage) View() string {
+	return p.Model.View()
+}
 
 type Item struct {
 	TitleStr string `toml:"title"`

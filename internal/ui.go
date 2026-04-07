@@ -14,7 +14,7 @@ import (
 type Model struct {
 	width   int
 	height  int
-	content list.Model
+	content components.Page
 	stack   []string
 }
 
@@ -22,7 +22,7 @@ func NewModel() *Model {
 	menu := components.NewList(engine.CollectionList(), 0, 0)
 
 	return &Model{
-		content: menu,
+		content: components.ListPage{Model: menu},
 	}
 }
 
@@ -41,43 +41,50 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			return m, tea.Quit
 		case "enter":
-			if item, ok := m.content.SelectedItem().(components.Item); ok {
-				if len(m.stack) == 0 {
-					m.stack = append(m.stack, item.TitleStr)
+			if page, ok := m.content.(components.ListPage); ok {
+				if item, ok := page.Model.SelectedItem().(components.Item); ok {
+					if len(m.stack) == 0 {
+						m.stack = append(m.stack, item.TitleStr)
 
-					newItems := engine.ScriptList(item.Target)
-					listItems := make([]list.Item, len(newItems))
-					for i, it := range newItems {
-						listItems[i] = it
+						newItems := engine.ScriptList(item.Target)
+						listItems := make([]list.Item, len(newItems))
+						for i, it := range newItems {
+							listItems[i] = it
+						}
+
+						cmd := page.Model.SetItems(listItems)
+						page.Model.ResetSelected()
+						m.content = page
+						return m, cmd
+					} else {
+						// User pressed enter on an actual script!
+						// m.content = engine.NewRunnerPage(...)
 					}
-
-					cmd := m.content.SetItems(listItems)
-					m.content.ResetSelected()
-					return m, cmd
-				} else {
-					// User pressed enter on an actual script!
 				}
 			}
 
 		case "esc":
-			if m.content.FilterState() == list.Filtering {
-				break
-			}
-
-			if len(m.stack) > 0 {
-				m.stack = m.stack[:len(m.stack)-1]
-
-				rootItems := engine.CollectionList()
-				listItems := make([]list.Item, len(rootItems))
-				for i, it := range rootItems {
-					listItems[i] = it
+			if page, ok := m.content.(components.ListPage); ok {
+				if page.Model.FilterState() == list.Filtering {
+					break
 				}
 
-				cmd := m.content.SetItems(listItems)
-				m.content.ResetSelected()
-				return m, cmd
-			} else if len(m.stack) == 0 {
-				return m, nil
+				if len(m.stack) > 0 {
+					m.stack = m.stack[:len(m.stack)-1]
+
+					rootItems := engine.CollectionList()
+					listItems := make([]list.Item, len(rootItems))
+					for i, it := range rootItems {
+						listItems[i] = it
+					}
+
+					cmd := page.Model.SetItems(listItems)
+					page.Model.ResetSelected()
+					m.content = page
+					return m, cmd
+				} else if len(m.stack) == 0 {
+					return m, nil
+				}
 			}
 		}
 	}
@@ -99,7 +106,7 @@ func (m *Model) View() tea.View {
 		// - 2 for the two "" strings we are adding to the layout!
 		spaceBetweenUs := m.height - 4 - lipgloss.Height(header) - lipgloss.Height(footer)
 
-		m.content.SetSize(m.width, spaceBetweenUs)
+		m.content = m.content.SetSize(m.width, spaceBetweenUs)
 
 		content := lipgloss.JoinVertical(
 			lipgloss.Left,
