@@ -85,9 +85,10 @@ func NewScript(filePath string, width, height int) ScriptPage {
 	vp := viewport.New(viewport.WithWidth(width), viewport.WithHeight(height))
 
 	return ScriptPage{
-		Model:      vp,
-		Script:     script,
-		EnterCount: 0,
+		Model:  vp,
+		Script: script,
+		// -1 to consume the first "enter"
+		EnterCount: -1,
 		Confirmed:  false,
 	}
 }
