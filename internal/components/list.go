@@ -25,23 +25,7 @@ func (p ListPage) View() string {
 	return p.Model.View()
 }
 
-type Item struct {
-	TitleStr string `toml:"title"`
-	DescStr  string `toml:"description"`
-	Target   string `toml:"target"`
-}
-
-func (i Item) Title() string       { return i.TitleStr }
-func (i Item) Description() string { return i.DescStr }
-func (i Item) FilterValue() string { return i.TitleStr }
-
-func NewList(items []Item, width, height int) list.Model {
-	listItems := make([]list.Item, len(items))
-
-	for i, item := range items {
-		listItems[i] = item
-	}
-
+func NewList(items []list.Item, width, height int) list.Model {
 	delegate := list.NewDefaultDelegate()
 	delegate.Styles.NormalTitle = delegate.Styles.NormalTitle.
 		Foreground(assets.ColorGray).
@@ -60,7 +44,7 @@ func NewList(items []Item, width, height int) list.Model {
 		Bold(true).
 		BorderForeground(assets.ColorOrange)
 
-	l := list.New(listItems, delegate, width, height)
+	l := list.New(items, delegate, width, height)
 
 	l.SetShowTitle(false)
 	l.SetShowStatusBar(false)

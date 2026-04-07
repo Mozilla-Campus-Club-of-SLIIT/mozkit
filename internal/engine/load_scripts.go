@@ -6,15 +6,34 @@ import (
 	"os"
 
 	"github.com/BurntSushi/toml"
-	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/components"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/scripts"
 )
 
-type Collection struct {
-	Collection []components.Item `toml:"collection"`
+type Item struct {
+	TitleStr string `toml:"title"`
+	DescStr  string `toml:"description"`
+	Target   string `toml:"target"`
 }
 
-func validateItem(item components.Item, location string) {
+func (i Item) Title() string       { return i.TitleStr }
+func (i Item) Description() string { return i.DescStr }
+func (i Item) FilterValue() string { return i.TitleStr }
+
+type Collection struct {
+	Collection []Item `toml:"collection"`
+}
+
+type Script struct {
+	Title       string `toml:"title"`
+	Description string `toml:"description"`
+	Actions     []struct {
+		Description string   `toml:"description"`
+		Tool        string   `toml:"tool"`
+		Arguments   []string `toml:"arguments"`
+	} `toml:"action"`
+}
+
+func validateItem(item Item, location string) {
 	if item.TitleStr == "" || item.DescStr == "" || item.Target == "" {
 		fmt.Fprintf(os.Stderr,
 			"Oh no! Mozkit found a broken item in '%s'!\n"+
@@ -46,7 +65,7 @@ func undecodedWarning(location string, undecoded []toml.Key) {
 	}
 }
 
-func CollectionList() []components.Item {
+func CollectionList() []Item {
 	const fileName = "collection.toml"
 	content, err := scripts.Scripts.ReadFile(fileName)
 	readError(fileName, err)
@@ -63,8 +82,8 @@ func CollectionList() []components.Item {
 	return collection.Collection
 }
 
-func ScriptList(directory string) []components.Item {
-	var items []components.Item
+func ScriptList(directory string) []Item {
+	var items []Item
 
 	entries, err := scripts.Scripts.ReadDir(directory)
 	readError(directory, err)
@@ -79,7 +98,7 @@ func ScriptList(directory string) []components.Item {
 				os.Exit(1)
 			}
 
-			var item components.Item
+			var item Item
 			_, err = toml.Decode(string(content), &item)
 			tomlDecodeError(path, err)
 
@@ -92,4 +111,15 @@ func ScriptList(directory string) []components.Item {
 	}
 
 	return items
+}
+
+func LoadScript(path string) Script {
+	content, err := scripts.Scripts.ReadFile(path)
+	readError(path, err)
+
+	var script Script
+	_, err = toml.Decode(string(content), &script)
+	tomlDecodeError(path, err)
+
+	return script
 }

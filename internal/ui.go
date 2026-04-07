@@ -15,11 +15,16 @@ type Model struct {
 	width   int
 	height  int
 	content components.Page
-	stack   []string
+	stack   []engine.Item
 }
 
 func NewModel() *Model {
-	menu := components.NewList(engine.CollectionList(), 0, 0)
+	engineItems := engine.CollectionList()
+	listItems := make([]list.Item, len(engineItems))
+	for i, it := range engineItems {
+		listItems[i] = it
+	}
+	menu := components.NewList(listItems, 0, 0)
 
 	return &Model{
 		content: components.ListPage{Model: menu},
@@ -42,9 +47,9 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "enter":
 			if page, ok := m.content.(components.ListPage); ok {
-				if item, ok := page.Model.SelectedItem().(components.Item); ok {
+				if item, ok := page.Model.SelectedItem().(engine.Item); ok {
 					if len(m.stack) == 0 {
-						m.stack = append(m.stack, item.TitleStr)
+						m.stack = append(m.stack, item)
 
 						newItems := engine.ScriptList(item.Target)
 						listItems := make([]list.Item, len(newItems))
@@ -57,8 +62,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 						m.content = page
 						return m, cmd
 					} else {
-						// User pressed enter on an actual script!
-						// m.content = engine.NewRunnerPage(...)
+						m.stack = append(m.stack, item)
+						m.content = components.NewScript(item.Target, m.width, m.height)
 					}
 				}
 			}
@@ -85,8 +90,28 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				} else if len(m.stack) == 0 {
 					return m, nil
 				}
+			} else if _, ok := m.content.(components.ScriptPage); ok {
+				m.stack = m.stack[:len(m.stack)-1]
+
+				var listItems []list.Item
+				if len(m.stack) > 0 {
+					newItems := engine.ScriptList(m.stack[len(m.stack)-1].Target)
+					listItems = make([]list.Item, len(newItems))
+					for i, it := range newItems {
+						listItems[i] = it
+					}
+				} else {
+					rootItems := engine.CollectionList()
+					listItems = make([]list.Item, len(rootItems))
+					for i, it := range rootItems {
+						listItems[i] = it
+					}
+				}
+				menu := components.NewList(listItems, 0, 0)
+				m.content = components.ListPage{Model: menu}
 			}
 		}
+
 	}
 	var cmd tea.Cmd
 	m.content, cmd = m.content.Update(msg)
@@ -96,7 +121,11 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m *Model) View() tea.View {
 	content := sizeCheck(m.width, m.height, func() string {
 
-		header := components.Header(m.width, m.stack...)
+		var location []string
+		for _, item := range m.stack {
+			location = append(location, item.TitleStr)
+		}
+		header := components.Header(m.width, location...)
 		footer := components.Footer()
 
 		// m.height (total)
