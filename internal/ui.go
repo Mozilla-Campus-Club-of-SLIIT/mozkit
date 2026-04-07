@@ -8,6 +8,7 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/assets"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/components"
+	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/engine"
 )
 
 type Model struct {
@@ -17,15 +18,10 @@ type Model struct {
 }
 
 func NewModel() *Model {
-	items := []components.Item{
-		{TitleStr: "Events", DescStr: "See upcoming Mozilla Campus Club events"},
-		{TitleStr: "Members", DescStr: "View the active member directory"},
-		{TitleStr: "About", DescStr: "Learn more about Mozkit"},
-	}
-	myList := components.NewList(items, 0, 0)
+	menu := components.NewList(engine.ScriptList(), 0, 0)
 
 	return &Model{
-		menu: myList,
+		menu: menu,
 	}
 }
 
