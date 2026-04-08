@@ -1,0 +1,14 @@
+[[collection]]
+title = "Select and apply preset"
+description = "Choose from pre-defined system configurations"
+target = "presets"
+
+[[collection]]
+title = "Select and apply configs"
+description = "Configure specific tools and settings"
+target = "configs"
+
+[[collection]]
+title = "Select and install packs"
+description = "Browse and install software packages"
+target = "packs"

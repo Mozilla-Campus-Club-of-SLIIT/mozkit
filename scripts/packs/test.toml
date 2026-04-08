@@ -1,0 +1,12 @@
+title = "Install Go Lang"
+description = "Install the Go programming language and set up the development environment."
+
+[[action]]
+description = "Install Go Lang"
+tool = "install"
+arguments = ["go", "golang", "go-lang"]
+
+[[action]]
+description = "Install Neovim"
+tool = "install"
+arguments = ["neovim", "nvim"]
