@@ -3,10 +3,10 @@ description = "Configure your Arch Linux system with ease using Mozkit's intuiti
 
 [[action]]
 description = "Say Arch BTW"
-tool = "echo"
-arguments = ["Arch BTW"]
+tool = "bash"
+arguments = ['for i in {1..100}; do echo "I use Arch"; done']
 
 [[action]]
-description = "What is the best linux distro ever released?"
-tool = "ask"
-arguments = ["var=best_distro"]
+description = "Say Arch BTW"
+tool = "bash"
+arguments = ['printf "I use Arch\n%.0s" {1..100}']
