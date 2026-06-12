@@ -1,12 +1,32 @@
-title = "Install Go Lang"
-description = "Install the Go programming language and set up the development environment."
+title = "Software Developer Starter Pack for beginner"
+description = "Install essential runtimes, version managers, containers, editors, and terminal utilities for a complete development environment."
 
 [[action]]
-description = "Install Go Lang"
+description = "Install Node.js LTS (via fnm version manager)"
 tool = "install"
-arguments = ["go", "golang", "go-lang"]
+arguments = ["fnm", "nodejs-lts"]
 
 [[action]]
-description = "Install Neovim"
+description = "Install Java Development Kit (JDK 17 or 21)"
 tool = "install"
-arguments = ["neovim", "nvim"]
+arguments = ["openjdk", "temurin-21"]
+
+[[action]]
+description = "Install Git Version Control"
+tool = "install"
+arguments = ["git"]
+
+[[action]]
+description = "Install Docker Desktop for Containerization"
+tool = "install"
+arguments = ["docker-desktop"]
+
+[[action]]
+description = "Install Visual Studio Code"
+tool = "install"
+arguments = ["vscode"]
+
+[[action]]
+description = "Install Windows Terminal (Enhanced Console)"
+tool = "install"
+arguments = ["windows-terminal"]
