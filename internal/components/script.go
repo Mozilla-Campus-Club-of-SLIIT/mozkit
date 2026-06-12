@@ -13,9 +13,10 @@ import (
 )
 
 var (
-	cmdStyle   = lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true)
-	outStyle   = lipgloss.NewStyle().Foreground(assets.ColorGray)
-	errStyle   = lipgloss.NewStyle().Foreground(assets.ColorOrange)
+	descStyle = lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true)
+	cmdStyle  = lipgloss.NewStyle().Foreground(assets.ColorWhite)
+	outStyle  = lipgloss.NewStyle().Foreground(assets.ColorGray)
+	errStyle  = lipgloss.NewStyle().Foreground(assets.ColorOrange)
 )
 
 type bashOutputMsg struct {
@@ -60,6 +61,7 @@ func (p ScriptPage) Update(msg tea.Msg) (Page, tea.Cmd) {
 		}
 
 	case bashOutputMsg:
+		p.outputBuf += descStyle.Render("# "+p.Script.Actions[msg.Index].Description) + "\n"
 		cmdLine := strings.Join(p.Script.Actions[msg.Index].Arguments, " ")
 		p.outputBuf += cmdStyle.Render("$ "+cmdLine) + "\n"
 		if msg.Err != nil {
