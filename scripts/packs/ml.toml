@@ -1,0 +1,17 @@
+title = "Machine Learning Starter Pack for Windows"
+description = "Install essential runtimes, package managers, and hardware driver toolkits required for a local deep learning environment."
+
+[[action]]
+description = "Install NVIDIA CUDA Toolkit (For GPU Accelerated Deep Learning)"
+tool = "scoop"
+arguments = ["cuda"]
+
+[[action]]
+description = "Install Miniconda (Lightweight Python & Package Manager)"
+tool = "winget"
+arguments = ["Anaconda.Miniconda3"]
+
+[[action]]
+description = "Install Git Version Control"
+tool = "winget"
+arguments = ["Git.Git"]

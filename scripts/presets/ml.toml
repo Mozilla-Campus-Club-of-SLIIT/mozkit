@@ -1,0 +1,20 @@
+title = "Configure Deep Learning & Data Science Framework Presets"
+description = "Inject GPU-optimized deep learning backends, core mathematical ecosystems, and interactive runtime kernels into the workspace."
+
+[[action]]
+description = "Install PyTorch with explicit CUDA 12.1 support to unlock local GPU training"
+tool = "powershell"
+arguments = ["conda run -n ml-env pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121"]
+
+[[action]]
+description = "Install essential libraries for data manipulation, plotting, and classic machine learning"
+tool = "powershell"
+arguments = ["conda run -n ml-env pip install numpy pandas scikit-learn matplotlib seaborn scipy"]
+
+[[action]]
+description = "Install JupyterLab and register the Conda environment kernel for interactive development"
+tool = "powershell"
+arguments = [
+    "conda run -n ml-env pip install jupyterlab ipykernel",
+    "conda run -n ml-env python -m ipykernel install --user --name=ml-env --display-name 'Python 3.10 (ML-Env)'"
+]
