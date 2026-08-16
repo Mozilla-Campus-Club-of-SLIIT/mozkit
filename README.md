@@ -19,6 +19,12 @@ Ditch the messy bash scripts. Apply presets, configure tools, and install packag
 - **Hackable:** Run the baked-in defaults out of the box, or bring your own external TOML configs at runtime.
 - **Smooth as Butter:** Built on the Charm Bubbletea v2 ecosystem for a flawless, Elm-style terminal experience.
 
+## How it looks
+
+<p align="center">
+  <img width="1366" height="768" alt="Mozkit Demo Screenshot" src="https://github.com/user-attachments/assets/39cbfd59-fb29-4e8d-a7e2-2ec0b93b720d" />
+</p>
+
 ## Installation
 
 Grab the code and build it yourself using the Go toolchain:
