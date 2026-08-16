@@ -36,7 +36,7 @@ go build -o mozkit ./cmd/mozkit
 ```
 
 ## Contributing
-Got an idea for a killer new feature or found a bug? See our [contributing guide](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit?tab=contributing-ov) to jump right in.
+Got a killer new script you want to share with the world? Hit up the [wiki](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/wiki) for the rundown on how to write scripts using TOML, whip one up, and open a PR. We'd love to add it to the collection. If you're looking to squash bugs or add core engine features, check out our **[contributing guide](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit?tab=contributing-ov)** to jump right in.
 
 ## Whatcha think?
 We'd love to hear your thoughts on this project. Need help writing your own setup scripts or figuring out the architecture? We gotchu.
