@@ -1,0 +1,32 @@
+title = "Software Developer Starter Pack for beginner"
+description = "Install essential runtimes, version managers, containers, editors, and terminal utilities for a complete development environment."
+
+[[action]]
+description = "Install Node.js LTS (via fnm version manager)"
+tool = "install"
+arguments = ["fnm", "nodejs-lts"]
+
+[[action]]
+description = "Install Java Development Kit (JDK 17 or 21)"
+tool = "install"
+arguments = ["openjdk", "temurin-21"]
+
+[[action]]
+description = "Install Git Version Control"
+tool = "install"
+arguments = ["git"]
+
+[[action]]
+description = "Install Docker Desktop for Containerization"
+tool = "install"
+arguments = ["docker-desktop"]
+
+[[action]]
+description = "Install Visual Studio Code"
+tool = "install"
+arguments = ["vscode"]
+
+[[action]]
+description = "Install Windows Terminal (Enhanced Console)"
+tool = "install"
+arguments = ["windows-terminal"]

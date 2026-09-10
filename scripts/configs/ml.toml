@@ -1,0 +1,12 @@
+title = "Configure Windows Machine Learning Shell Environment"
+description = "Initialize the package manager and create isolated runtime sandboxes for stable package management."
+
+[[action]]
+description = "Initialize Conda Shell"
+tool = "powershell"
+arguments = ["conda init powershell"]
+
+[[action]]
+description = "Create Core ML Environment"
+tool = "powershell"
+arguments = ["conda create -n ml-env python=3.10 -y"]

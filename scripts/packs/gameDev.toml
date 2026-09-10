@@ -1,0 +1,56 @@
+title = "Game Developer Starter Pack"
+description = "Install cross-platform game engines, C++/C# code editors, 3D modeling tools, pixel art suites, and audio frameworks."
+
+# --- GAME ENGINES ---
+[[action]]
+description = "Install Unity Hub & Unity Engine"
+tool = "install"
+arguments = ["unity-hub"]
+
+[[action]]
+description = "Install Epic Games Launcher (for Unreal Engine 5)"
+tool = "install"
+arguments = ["epicgameslauncher"]
+
+[[action]]
+description = "Install Godot Engine (Lightweight & Open-Source)"
+tool = "install"
+arguments = ["godot"]
+
+# --- IDEs & CODE ASSISTANTS ---
+[[action]]
+description = "Install Visual Studio 2022 Community (with Game Dev Workloads)"
+tool = "install"
+arguments = ["visualstudio2022community"]
+
+[[action]]
+description = "Install JetBrains Rider (The ultimate IDE for Unity & Unreal C#)"
+tool = "install"
+arguments = ["rider"]
+
+# --- 3D & 2D ART PIPELINE ---
+[[action]]
+description = "Install Blender (3D Modeling, Rigging, and Animation)"
+tool = "install"
+arguments = ["blender"]
+
+[[action]]
+description = "Install Aseprite (Industry standard for 2D Pixel Art & Animation)"
+tool = "install"
+arguments = ["aseprite"]
+
+[[action]]
+description = "Install Krita (Free Digital Painting for Concept Art & Textures)"
+tool = "install"
+arguments = ["krita"]
+
+# --- AUDIO & UTILITIES ---
+[[action]]
+description = "Install Audacity (Quick Audio Editing & Sound FX Design)"
+tool = "install"
+arguments = ["audacity"]
+
+[[action]]
+description = "Install Git Version Control (with Git LFS for heavy game assets)"
+tool = "install"
+arguments = ["git", "git-lfs"]
