@@ -1,0 +1,13 @@
+[tools]
+gh = "2.100.0"
+go = "1.27.1"
+gum = "2.0.1"
+
+[vars]
+ColorOrange = "#ff4b0c"
+ColorWhite  = "#FFFFFF"
+ColorGray   = "#888888"
+
+[tasks.new]
+description = "Let Moxy set up a new branch for an assigned GitHub issue"
+run = "COLOR_ORANGE='{{ vars.ColorOrange }}' bash ./moxy/new.sh"
