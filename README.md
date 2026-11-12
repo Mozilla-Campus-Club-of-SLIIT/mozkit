@@ -27,7 +27,7 @@ Ditch the messy bash scripts. Apply presets, configure tools, and install packag
 
 ## Installation
 
-Build from source with [mise](https://mise.jdx.dev), which installs the pinned Go toolchain and injects the version:
+Build from source with [mise](https://mise.jdx.dev), which installs the pinned Go toolchain and injects the version. First, install mise by following the [official instructions](https://mise.jdx.dev/installing-mise.html). Then:
 ```bash
 git clone https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit.git
 cd mozkit
@@ -36,6 +36,21 @@ mise run dev      # run mozkit (shows mozkit://तुर/0.1.0/)
 mise run build    # build ./mozkit (shows mozkit://तुर/0.1.0/)
 ```
 The version and codename come from `[vars]` in `mise.toml`. Change them there, or override per run: `mise run build 0.2.0 SomeName`.
+
+### Without mise
+
+Install the Go version pinned under `[tools]` in [`mise.toml`](mise.toml), then run the commands below from the repo root. Take the version and codename values from `[vars]` in `mise.toml`.
+```bash
+PKG=github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/version
+LDFLAGS="-X $PKG.Version=0.1.0 -X $PKG.CodeName=तुर"
+
+# dev (run)
+go run -ldflags "$LDFLAGS" ./cmd/mozkit
+
+# build
+go build -ldflags "$LDFLAGS" -o mozkit ./cmd/mozkit
+```
+Leaving out `-ldflags` works too, but the breadcrumb then shows the defaults (`mozkit://sixSeven/67.67.67/`).
 
 Alternatively, install with the Go toolchain:
 ```bash
