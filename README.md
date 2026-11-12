@@ -27,19 +27,21 @@ Ditch the messy bash scripts. Apply presets, configure tools, and install packag
 
 ## Installation
 
-Grab the code and build it yourself using the Go toolchain:
+Build from source with [mise](https://mise.jdx.dev), which installs the pinned Go toolchain and injects the version:
 ```bash
-# Install globally via Go
+git clone https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit.git
+cd mozkit
+mise install      # installs the pinned Go version
+mise run dev      # run mozkit (shows mozkit://तुर/0.1.0/)
+mise run build    # build ./mozkit (shows mozkit://तुर/0.1.0/)
+```
+The version and codename come from `[vars]` in `mise.toml`. Change them there, or override per run: `mise run build 0.2.0 SomeName`.
+
+Alternatively, install with the Go toolchain:
+```bash
 go install github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/cmd/mozkit@latest
 ```
-
-Or, build it from source:
-```bash
-# Clone and build
-git clone https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/cmd/mozkit.git
-cd mozkit
-go build -o mozkit ./cmd/mozkit
-```
+This skips the injection, so the breadcrumb falls back to the defaults: `mozkit://sixSeven/67.67.67/`.
 
 ## Contributing
 Got a killer new script you want to share with the world? Hit up the [wiki](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/wiki) for the rundown on how to write scripts using TOML, whip one up, and open a PR. We'd love to add it to the collection. If you're looking to squash bugs or add core engine features, check out our **[contributing guide](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit?tab=contributing-ov)** to jump right in.
