@@ -5,6 +5,7 @@ import (
 
 	"charm.land/lipgloss/v2"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/assets"
+	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/version"
 )
 
 const decorator = "/"
@@ -34,7 +35,7 @@ func rightDecorate(leftDecoration, logo string, width int) string {
 }
 
 func breadcrumbs(location ...string) string {
-	content := "mozkit://"
+	content := "mozkit://" + version.CodeName + "/" + version.Version + "/"
 	if location != nil {
 		content += strings.Join(location, "/")
 	}

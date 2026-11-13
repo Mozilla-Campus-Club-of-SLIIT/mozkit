@@ -1,0 +1,34 @@
+[tools]
+go = "1.27.4"
+
+[vars]
+version = "0.1.0"
+codename = "तुर"
+
+[tasks.dev]
+description = "Run mozkit with version and codename injected"
+usage = '''
+arg "[version]" default="{{vars.version}}"
+arg "[codename]" default="{{vars.codename}}"
+'''
+run = '''
+pkg=github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/version
+flags=""
+[ -n "$usage_version" ] && flags="$flags -X $pkg.Version=$usage_version"
+[ -n "$usage_codename" ] && flags="$flags -X $pkg.CodeName=$usage_codename"
+go run -ldflags "$flags" ./cmd/mozkit
+'''
+
+[tasks.build]
+description = "Build ./mozkit with version and codename injected"
+usage = '''
+arg "[version]" default="{{vars.version}}"
+arg "[codename]" default="{{vars.codename}}"
+'''
+run = '''
+pkg=github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/version
+flags=""
+[ -n "$usage_version" ] && flags="$flags -X $pkg.Version=$usage_version"
+[ -n "$usage_codename" ] && flags="$flags -X $pkg.CodeName=$usage_codename"
+go build -ldflags "$flags" -o mozkit ./cmd/mozkit
+'''
