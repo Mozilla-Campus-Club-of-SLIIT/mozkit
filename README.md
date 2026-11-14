@@ -9,14 +9,14 @@
 //// ████      ████  ███████ ███████  ███████████████  ████     ██████  ████       ████
 ```
 
-Ditch the messy bash scripts. Apply presets, configure tools, and install packages entirely from your keyboard, wrapped in a beautiful terminal interface.
+Ditch the messy bash scripts. Run setup scripts and configure your environment entirely from your keyboard, wrapped in a beautiful terminal interface.
 
 ## Features
 
 - **Self-Contained:** A single Go binary. No databases, no hidden services, no nonsense.
 - **Keyboard Native:** Keep your hands on the home row. Navigate your entire setup without ever reaching for the mouse.
-- **Declarative:** All menus, packages, and presets live in clean, readable TOML files embedded right into the build.
-- **Hackable:** Run the baked-in defaults out of the box, or bring your own external TOML configs at runtime.
+- **Declarative:** All scripts live in clean, readable TOML files embedded right into the build.
+- **Hackable:** Run the baked-in defaults out of the box, or bring your own external TOML scripts at runtime.
 - **Smooth as Butter:** Built on the Charm Bubbletea v2 ecosystem for a flawless, Elm-style terminal experience.
 
 ## How it looks
@@ -59,7 +59,7 @@ go install github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/cmd/mozkit@latest
 This skips the injection, so the breadcrumb falls back to the defaults: `mozkit://sixSeven/67.67.67/`.
 
 ## Contributing
-Got a killer new script you want to share with the world? Hit up the [wiki](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/wiki) for the rundown on how to write scripts using TOML, whip one up, and open a PR. We'd love to add it to the collection. If you're looking to squash bugs or add core engine features, check out our **[contributing guide](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit?tab=contributing-ov)** to jump right in.
+Got a killer new script you want to share with the world? Hit up the [wiki](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/wiki) for the rundown on how to write scripts using TOML, whip one up, and open a PR. We'd love to include it. If you're looking to squash bugs or add core engine features, check out our **[contributing guide](https://github.com/Mozilla-Campus-Club-of-SLIIT/mozkit?tab=contributing-ov)** to jump right in.
 
 ## Whatcha think?
 We'd love to hear your thoughts on this project. Need help writing your own setup scripts or figuring out the architecture? We gotchu.
