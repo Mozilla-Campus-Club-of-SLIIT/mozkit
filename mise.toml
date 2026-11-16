@@ -18,6 +18,9 @@ flags=""
 [ -n "$usage_codename" ] && flags="$flags -X $pkg.CodeName=$usage_codename"
 go run -ldflags "$flags" ./cmd/mozkit
 '''
+run_windows = '''
+powershell -NoProfile -Command "$pkg='github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/version'; go run -ldflags \"-X $pkg.Version=$env:usage_version -X $pkg.CodeName=$env:usage_codename\" ./cmd/mozkit"
+'''
 
 [tasks.build]
 description = "Build ./mozkit with version and codename injected"
@@ -31,4 +34,7 @@ flags=""
 [ -n "$usage_version" ] && flags="$flags -X $pkg.Version=$usage_version"
 [ -n "$usage_codename" ] && flags="$flags -X $pkg.CodeName=$usage_codename"
 go build -ldflags "$flags" -o mozkit ./cmd/mozkit
+'''
+run_windows = '''
+powershell -NoProfile -Command "$pkg='github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/internal/version'; go build -ldflags \"-X $pkg.Version=$env:usage_version -X $pkg.CodeName=$env:usage_codename\" -o mozkit.exe ./cmd/mozkit"
 '''

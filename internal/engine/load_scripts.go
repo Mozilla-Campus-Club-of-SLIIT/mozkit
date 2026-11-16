@@ -2,8 +2,9 @@ package engine
 
 import (
 	"fmt"
-	"log"
 	"os"
+	"sort"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 	"github.com/Mozilla-Campus-Club-of-SLIIT/mozkit/scripts"
@@ -18,10 +19,6 @@ type Item struct {
 func (i Item) Title() string       { return i.TitleStr }
 func (i Item) Description() string { return i.DescStr }
 func (i Item) FilterValue() string { return i.TitleStr }
-
-type Collection struct {
-	Collection []Item `toml:"collection"`
-}
 
 type Script struct {
 	Title       string `toml:"title"`
@@ -59,39 +56,15 @@ func tomlDecodeError(location string, err error) {
 	}
 }
 
-func undecodedWarning(location string, undecoded []toml.Key) {
-	if len(undecoded) > 0 {
-		log.Printf("Hmm... Mozkit noticed some strange extra items in '%s'. Moxy, what are these doing here?: %v\n", location, undecoded)
-	}
-}
-
-func CollectionList() []Item {
-	const fileName = "collection.toml"
-	content, err := scripts.Scripts.ReadFile(fileName)
-	readError(fileName, err)
-
-	var collection Collection
-	metadata, err := toml.Decode(string(content), &collection)
-	tomlDecodeError(fileName, err)
-	undecodedWarning(fileName, metadata.Undecoded())
-
-	for i, col := range collection.Collection {
-		validateItem(col, fmt.Sprintf("Collection #%d", i+1))
-	}
-
-	return collection.Collection
-}
-
-func ScriptList(directory string) []Item {
+func ScriptList() []Item {
 	var items []Item
 
-	entries, err := scripts.Scripts.ReadDir(directory)
-	readError(directory, err)
+	entries, err := scripts.Scripts.ReadDir(".")
+	readError("scripts", err)
 
 	for _, entry := range entries {
-		if !entry.IsDir() && len(entry.Name()) > 5 && entry.Name()[len(entry.Name())-5:] == ".toml" {
-
-			path := directory + "/" + entry.Name()
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".toml") {
+			path := entry.Name()
 			content, err := scripts.Scripts.ReadFile(path)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Yikes! Mozkit couldn't open '%s' even though it saw it sitting there!\nError: %v\n", path, err)
@@ -109,6 +82,15 @@ func ScriptList(directory string) []Item {
 			items = append(items, item)
 		}
 	}
+
+	sort.Slice(items, func(i, j int) bool {
+		iTitle := strings.ToLower(items[i].TitleStr)
+		jTitle := strings.ToLower(items[j].TitleStr)
+		if iTitle == jTitle {
+			return items[i].TitleStr < items[j].TitleStr
+		}
+		return iTitle < jTitle
+	})
 
 	return items
 }
