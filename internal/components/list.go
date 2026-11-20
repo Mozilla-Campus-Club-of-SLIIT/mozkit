@@ -28,21 +28,21 @@ func (p ListPage) View() string {
 func NewList(items []list.Item, width, height int) list.Model {
 	delegate := list.NewDefaultDelegate()
 	delegate.Styles.NormalTitle = delegate.Styles.NormalTitle.
-		Foreground(assets.ColorGray).
+		Foreground(assets.ColorMuted).
 		Bold(false)
 	delegate.Styles.NormalDesc = delegate.Styles.NormalDesc.
-		Foreground(assets.ColorGray).
+		Foreground(assets.ColorMuted).
 		Bold(false)
 
 	delegate.Styles.SelectedTitle = delegate.Styles.SelectedTitle.
-		Foreground(assets.ColorOrange).
+		Foreground(assets.ColorAccent).
 		Bold(true).
-		BorderForeground(assets.ColorOrange)
+		BorderForeground(assets.ColorAccent)
 
 	delegate.Styles.SelectedDesc = delegate.Styles.SelectedDesc.
-		Foreground(assets.ColorWhite).
+		Foreground(assets.ColorForeground).
 		Bold(true).
-		BorderForeground(assets.ColorOrange)
+		BorderForeground(assets.ColorAccent)
 
 	l := list.New(items, delegate, width, height)
 

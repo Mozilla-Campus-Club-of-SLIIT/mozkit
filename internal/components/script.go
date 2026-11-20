@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	descStyle = lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true)
-	cmdStyle  = lipgloss.NewStyle().Foreground(assets.ColorWhite)
-	outStyle  = lipgloss.NewStyle().Foreground(assets.ColorGray)
-	errStyle  = lipgloss.NewStyle().Foreground(assets.ColorOrange)
+	descStyle = lipgloss.NewStyle().Foreground(assets.ColorAccent).Bold(true)
+	cmdStyle  = lipgloss.NewStyle().Foreground(assets.ColorForeground)
+	outStyle  = lipgloss.NewStyle().Foreground(assets.ColorMuted)
+	errStyle  = lipgloss.NewStyle().Foreground(assets.ColorAccent)
 )
 
 type bashOutputMsg struct {
@@ -130,13 +130,13 @@ func (p ScriptPage) View() string {
 	if p.Confirmed {
 		content = "running..."
 	} else {
-		content = lipgloss.NewStyle().Foreground(assets.ColorWhite).Bold(true).Render(
+		content = lipgloss.NewStyle().Foreground(assets.ColorForeground).Bold(true).Render(
 			"Hey! This script is going to run the following actions. Do you want to continue?\nKeep in mind that there is no undo, and it cannot be stopped in the middle.",
 		)
 
 		content += "\n\n"
 
-		content += lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true).Render(
+		content += lipgloss.NewStyle().Foreground(assets.ColorAccent).Bold(true).Render(
 			fmt.Sprintf("Press ENTER 3 times to continue (%d/3) | Press ESC to go back", p.EnterCount),
 		)
 

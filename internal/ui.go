@@ -32,11 +32,15 @@ func NewModel() *Model {
 }
 
 func (m *Model) Init() tea.Cmd {
-	return nil
+	return tea.RequestBackgroundColor
 }
 
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.BackgroundColorMsg:
+		assets.SetBackground(msg.Color)
+		assets.SetDarkBackground(msg.IsDark())
+
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
@@ -108,7 +112,12 @@ func (m *Model) View() tea.View {
 			footer,
 		)
 
-		return lipgloss.NewStyle().Padding(1).Render(content)
+		return lipgloss.NewStyle().
+			Padding(1).
+			Width(m.width).
+			Height(m.height).
+			Background(assets.ColorBackground).
+			Render(content)
 	})
 
 	view := tea.NewView(content)
@@ -122,13 +131,13 @@ func sizeCheck(width, height int, content func() string) string {
 
 	if width <= minWidth-1 || height <= minHeight-1 {
 
-		title := lipgloss.NewStyle().Foreground(assets.ColorWhite).Bold(true).Render("I needs a little more room to stretch my legs!")
+		title := lipgloss.NewStyle().Foreground(assets.ColorForeground).Bold(true).Render("I needs a little more room to stretch my legs!")
 
-		stats := lipgloss.NewStyle().Foreground(assets.ColorGray).Align(lipgloss.Center).Render(
+		stats := lipgloss.NewStyle().Foreground(assets.ColorMuted).Align(lipgloss.Center).Render(
 			fmt.Sprintf("What you gave me: %dx%d\nWhat I need(at least): %dx%d", width, height, minWidth, minHeight),
 		)
 
-		instruction := lipgloss.NewStyle().Foreground(assets.ColorOrange).Bold(true).Render("Could you please resize your terminal or decrease your font size?")
+		instruction := lipgloss.NewStyle().Foreground(assets.ColorAccent).Bold(true).Render("Could you please resize your terminal or decrease your font size?")
 
 		contentBox := lipgloss.JoinVertical(
 			lipgloss.Center,

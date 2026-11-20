@@ -19,8 +19,8 @@ var KeyBindings = [][2]string{
 func Footer() string {
 	var parts []string
 
-	keyStyle := lipgloss.NewStyle().Foreground(assets.ColorGray).Bold(true)
-	actionStyle := lipgloss.NewStyle().Foreground(assets.ColorGray)
+	keyStyle := lipgloss.NewStyle().Foreground(assets.ColorMuted).Bold(true)
+	actionStyle := lipgloss.NewStyle().Foreground(assets.ColorMuted)
 
 	for _, binding := range KeyBindings {
 		keycap := keyStyle.Render(binding[0])
