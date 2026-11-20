@@ -17,7 +17,7 @@ func leftDecorate(logo string) string {
 	for i := range lines {
 		lines[i] = strings.Repeat(decorator, numberOfDecoratorsPerLine)
 	}
-	return lipgloss.NewStyle().Foreground(assets.ColorGray).Bold(true).Render(strings.Join(lines, "\n"))
+	return lipgloss.NewStyle().Foreground(assets.ColorMuted).Bold(true).Render(strings.Join(lines, "\n"))
 }
 
 func rightDecorate(leftDecoration, logo string, width int) string {
@@ -31,7 +31,7 @@ func rightDecorate(leftDecoration, logo string, width int) string {
 	for i := range lines {
 		lines[i] = strings.Repeat(decorator, remainingWidth)
 	}
-	return lipgloss.NewStyle().Foreground(assets.ColorGray).Bold(true).Render(strings.Join(lines, "\n"))
+	return lipgloss.NewStyle().Foreground(assets.ColorMuted).Bold(true).Render(strings.Join(lines, "\n"))
 }
 
 func breadcrumbs(location ...string) string {
@@ -39,7 +39,7 @@ func breadcrumbs(location ...string) string {
 	if location != nil {
 		content += strings.Join(location, "/")
 	}
-	return lipgloss.NewStyle().Padding(0, 1).Background(assets.ColorOrange).Foreground(assets.ColorWhite).Bold(true).Render(content)
+	return lipgloss.NewStyle().Padding(0, 1).Background(assets.ColorAccent).Foreground(assets.ColorForeground).Bold(true).Render(content)
 }
 
 func Header(width int, location ...string) string {

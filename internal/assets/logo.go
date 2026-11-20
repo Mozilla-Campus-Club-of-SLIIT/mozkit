@@ -9,8 +9,8 @@ import (
 
 func logo() string {
 	const splitIndex = 50
-	mozStyle := lipgloss.NewStyle().Foreground(ColorWhite)
-	kitStyle := lipgloss.NewStyle().Foreground(ColorOrange)
+	mozStyle := lipgloss.NewStyle().Foreground(ColorForeground)
+	kitStyle := lipgloss.NewStyle().Foreground(ColorAccent)
 
 	logo := []string{
 		"██████  ██████  ███████ ███████  ███████████████  ████     ██████  ████  ████ ████ ████",
@@ -36,7 +36,7 @@ func RenderLogo() string {
 	logo := logo()
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
-		lipgloss.NewStyle().Foreground(ColorOrange).Bold(true).Render("sliitmozilla.org"),
+		lipgloss.NewStyle().Foreground(ColorAccent).Bold(true).Render("sliitmozilla.org"),
 		logo,
 	)
 }
